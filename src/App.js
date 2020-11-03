@@ -22,8 +22,14 @@ function App() {
     newGlobalConfirmed: "",
     newGlobalRecovered: "",
     newGlobalDeaths: "",
+    searchCountryInput: "",
     allCountries: [],
   })
+
+  /* ------------ Input Change Handlers ------------ */
+  globalVariableState.handleCountryFilterInputChange = ({ target }) => {
+    setGlobalVariableState({ ...globalVariableState, [target.name]: target.value })
+  }
 
   // Get all country data
   globalVariableState.getSummary = async () => {
@@ -46,6 +52,7 @@ function App() {
         })
       })
       .catch((e) => console.error(e));
+    // console.log("Saving request data!")
       
   }
 

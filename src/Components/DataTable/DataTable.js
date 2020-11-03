@@ -22,72 +22,96 @@ import GlobalVariables from "../../Utilities/GlobalVariables";
 const DataTable = (props) => {
 
     const {
-        allCountries
+        allCountries,
+        searchCountryInput,
+        handleCountryFilterInputChange
     } = useContext(GlobalVariables);
+
+
 
     let allCountriesSorted = sort(allCountries).desc(u => u.TotalConfirmed);
 
     const renderFilteredCountries = () => {
-        return allCountriesSorted.map((countryData, i) => (
-            <tr key={i} className="text-center">
-                <td className="text-left text-truncate">
-                    <ReactCountryFlag
-                        countryCode={countryData.CountryCode}
-                        svg
-                        style={{
-                            width: '20px',
-                            height: '20px',
-                            marginRight: '5px',
-                        }}
-                        title={countryData.CountryCode}
-                    />
-                    {countryData.Country.toLocaleString('en-US')}
-                </td>
-                <td>{countryData.TotalConfirmed.toLocaleString('en-US')}</td>
-                <td>{countryData.NewConfirmed.toLocaleString('en-US')}</td>
-                <td>{countryData.TotalRecovered.toLocaleString('en-US')}</td>
-                <td>{countryData.NewRecovered.toLocaleString('en-US')}</td>
-                <td>{countryData.TotalDeaths.toLocaleString('en-US')}</td>
-                <td>{countryData.NewDeaths.toLocaleString('en-US')}</td>
-            </tr>
-        ));
+
+        if (searchCountryInput !== "") {
+            let filteredCountry = [];
+
+            console.log(searchCountryInput);
+
+            for (let i = 0; i < allCountries.length; i++) {
+                if (allCountries[i].Country.toLowerCase().includes(searchCountryInput.toLowerCase())) {
+                    filteredCountry.push(allCountries[i]);
+                };
+            };
+
+            return filteredCountry.map((countryData, i) => (
+                <tr key={i} className={i % 2 === 0 ? "text-center odd-key-data" : "text-center"} >
+                    <td className="text-left text-truncate">
+                        <ReactCountryFlag
+                            countryCode={countryData.CountryCode}
+                            svg
+                            style={{
+                                width: '20px',
+                                height: '20px',
+                                marginRight: '5px',
+                            }}
+                            title={countryData.CountryCode}
+                        />
+                        {countryData.Country.toLocaleString('en-US')}
+                    </td>
+                    <td className="confirmed" >{countryData.TotalConfirmed.toLocaleString('en-US') !== "0" ? countryData.TotalConfirmed.toLocaleString('en-US') : "No Data"}</td>
+                    <td className="confirmed" >{countryData.NewConfirmed.toLocaleString('en-US') !== "0" ? "↑" + countryData.NewConfirmed.toLocaleString('en-US') : "No Data"}</td>
+                    <td className="recovered" >{countryData.TotalRecovered.toLocaleString('en-US') !== "0" ? countryData.TotalRecovered.toLocaleString('en-US') : "No Data"}</td>
+                    <td className="recovered" >{countryData.NewRecovered.toLocaleString('en-US') !== "0" ? "↑" + countryData.NewRecovered.toLocaleString('en-US') : "No Data"}</td>
+                    <td className="deaths" >{countryData.TotalDeaths.toLocaleString('en-US') !== "0" ? countryData.TotalDeaths.toLocaleString('en-US') : "No Data"}</td>
+                    <td className="deaths" >{countryData.NewDeaths.toLocaleString('en-US') !== "0" ? "↑" + countryData.NewDeaths.toLocaleString('en-US') : "No Data"}</td>
+                </tr>
+            ));
+
+        } else {
+            return allCountriesSorted.map((countryData, i) => (
+                <tr key={i} className={i % 2 === 0 ? "text-center odd-key-data" : "text-center"} >
+                    <td className="text-left text-truncate">
+                        <ReactCountryFlag
+                            countryCode={countryData.CountryCode}
+                            svg
+                            style={{
+                                width: '20px',
+                                height: '20px',
+                                marginRight: '5px',
+                            }}
+                            title={countryData.CountryCode}
+                        />
+                        {countryData.Country.toLocaleString('en-US')}
+                    </td>
+                    <td className="confirmed" >{countryData.TotalConfirmed.toLocaleString('en-US') !== "0" ? countryData.TotalConfirmed.toLocaleString('en-US') : "No Data"}</td>
+                    <td className="confirmed" >{countryData.NewConfirmed.toLocaleString('en-US') !== "0" ? "↑" + countryData.NewConfirmed.toLocaleString('en-US') : "No Data"}</td>
+                    <td className="recovered" >{countryData.TotalRecovered.toLocaleString('en-US') !== "0" ? countryData.TotalRecovered.toLocaleString('en-US') : "No Data"}</td>
+                    <td className="recovered" >{countryData.NewRecovered.toLocaleString('en-US') !== "0" ? "↑" + countryData.NewRecovered.toLocaleString('en-US') : "No Data"}</td>
+                    <td className="deaths" >{countryData.TotalDeaths.toLocaleString('en-US') !== "0" ? countryData.TotalDeaths.toLocaleString('en-US') : "No Data"}</td>
+                    <td className="deaths" >{countryData.NewDeaths.toLocaleString('en-US') !== "0" ? "↑" + countryData.NewDeaths.toLocaleString('en-US') : "No Data"}</td>
+                </tr>
+            ));
+        }
     };
 
     const renderUndefined = () => {
         return (
             <>
                 <tr className="text-center">
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                </tr>
-                <tr className="text-center">
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                </tr>
-                <tr className="text-center">
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
-                    <th>Undefined</th>
+                    <th></th>
+                    <th></th>
+                    <th>Error in</th>
+                    <th>loading data</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </>
         )
     }
 
-
+    // Component Return ------------->
     return (
         <Card>
             <Container>
@@ -101,11 +125,16 @@ const DataTable = (props) => {
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText><FontAwesomeIcon icon={faSearch} /></InputGroupText>
                             </InputGroupAddon>
-                            <Input />
+                            <Input
+                                placeholder="Country"
+                                name="searchCountryInput"
+                                value={searchCountryInput}
+                                onChange={(e) => handleCountryFilterInputChange(e)}
+                            />
                         </InputGroup>
                     </Col>
                 </Row>
-                <Row className="data-table-margin">
+                <Row className="data-table-margin d-flex justify-content-center mb-4">
                     <Card className="data-table-card border-top-0">
                         <Table>
                             <thead>
@@ -120,7 +149,7 @@ const DataTable = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {allCountriesSorted !== undefined ? renderFilteredCountries() : renderUndefined()}
+                                {allCountriesSorted !== undefined !== "0" ? renderFilteredCountries() : renderUndefined()}
                             </tbody>
                         </Table>
                     </Card>
