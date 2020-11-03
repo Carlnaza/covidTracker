@@ -7,7 +7,9 @@ const GlobalVariables = createContext({
     newGlobalConfirmed: "",
     newGlobalRecovered: "",
     newGlobalDeaths: "",
-    getSummary: () => {},
-}); 
+    getSummary: () => { },
+    searchCountryInput: "",
+    handleCountryFilterInputChange: () => { },
+});
 
 export default GlobalVariables;

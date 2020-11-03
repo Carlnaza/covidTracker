@@ -2,8 +2,43 @@ body {
     margin: 0;
     font-family: 'Montserrat', sans-serif;
   }
+
+.root {
+  background-color: #EEEEEE;
+  height: 100vh;
+}
   
   code {
     font-family: 'Montserrat', sans-serif;
   }
   
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d1d1 #b3b2af;
+  }
+  
+  *::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background:transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #d1d1d1;
+    border-radius: 20px;
+    border: 1px solid #b3b2af;
+  }
+
+.confirmed {
+    color: green;
+}
+
+.recovered {
+    color: blue;
+}
+
+.deaths {
+    color: red;
+}
